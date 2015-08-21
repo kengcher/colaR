@@ -118,21 +118,36 @@ igf_layout <- ctx$get('
   })                    
 ')
 
-plot(igf, layout = igf_layout, mark.groups = lapply(group_json$groups$leaves,function(x)x+1)  )
+plot.new()
+plot.window(xlim=c(-3,3),ylim=c(-1,1))
 
-rects <- ctx$get('graph.groups.map(function(d){return d.bounds})')
-
-apply(
-  ctx$get('graph.groups.map(function(d){return d.bounds})')
-  ,MARGIN = 1
-  ,function(coords){
-      rect(
-        xleft = rescale(coords[["x"]], c(-1,1), from = range(igf_layout[,1]))
-        ,ybottom = rescale(-coords[["Y"]], c(-1,1), range(igf_layout[,2]))
-        ,xright = rescale(coords[["X"]], c(-1,1), from = range(igf_layout[,1]))
-        ,ytop = rescale(-coords[["y"]], c(-1,1), range(igf_layout[,2]))
-        ,col = rgb( 0.9, 0.9, 0.9, alpha = 0.5 )
+ctx$get('graph.groups.map(function(d){return d.bounds})') %>>%
+  (
+    rect(
+      xleft = rescale(.$x, c(-1,1), from = range(igf_layout[,1]))
+      ,ybottom = rescale(-.$Y, c(-1,1), range(igf_layout[,2]))
+      ,xright = rescale(.$X, c(-1,1), from = range(igf_layout[,1]))
+      ,ytop = rescale(-.$y, c(-1,1), range(igf_layout[,2]))
+      ,col = c(
+        rgb(31/255, 119/255, 180/255,alpha=0.7)
+        ,rgb(174/255, 199/255, 232/255,alpha=0.7)
+        ,rgb(255/255, 127/255, 14/255,alpha=0.7)
       )
-  }
-)
+      ,border = NA
+    )
+  )
 
+plot(
+  igf
+  , layout = igf_layout
+  , vertex.shape = "square"
+  , vertex.label.color = "white"
+  , vertex.color = rgb(255, 187, 120, maxColorValue = 255)
+  , vertex.frame.color = "white"
+  , vertex.size = 25
+  , edge.arrow.mode = "-"
+  , edge.color = "#7A4E4E"
+  , edge.width= 2
+  #, mark.groups = lapply(group_json$groups$leaves,function(x)x+1)
+  , add = TRUE
+)
