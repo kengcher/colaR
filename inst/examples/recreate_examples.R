@@ -10,7 +10,12 @@ ctx = new_context(global="window")
 
 ctx$source(system.file("htmlwidgets/lib/WebCola/cola.js",package = "colaR"))
 
-align_json <- fromJSON("./WebCola/examples/graphdata/alignmentconstraints.json")
+align_json <- fromJSON(
+  system.file(
+    "htmlwidgets/lib/WebCola/examples/graphdata/alignmentconstraints.json",
+    package = "colaR"
+  )
+)
 ctx$assign( "graph", align_json )
 
 js_fun <- '
@@ -34,29 +39,37 @@ mycola
 
 ctx$eval(js_fun)
 
-
+# make an igraph from the JSON graph
 igf <- graph.data.frame(
   align_json$links + 1
   ,vertices =  data.frame(id = 1:nrow(align_json$nodes),align_json$nodes)
 )
 
+# get the layout from WebCola
 igf_layout <- ctx$get('
   graph.nodes.map(function(d){
     return [d.x,-d.y]
   })                    
 ')
 
-plot(igf, layout = igf_layout   )
-
+# plot our igraph laid out with WebCola
+plot(igf, layout = igf_layout)
 
 
 ### small grouped example
-group_json <- fromJSON( "./WebCola/examples/graphdata/smallgrouped.json")
-#ctx$assign( "graph", group_json )
+group_json <- fromJSON(
+  system.file(
+    "htmlwidgets/lib/WebCola/examples/graphdata/smallgrouped.json",
+    package = "colaR"
+  )
+)
 
 # need to get forEach polyfill
-ctx$source("https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.10/es5-shim.min.js")
+ctx$source(
+  "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.10/es5-shim.min.js"
+)
 
+# code to recreate small group example
 js_group <- '
 // console.assert does not exists
 console = {}
@@ -105,22 +118,28 @@ g_cola
 
 '
 
-
+# run the small group JS code in V8
 ctx$eval(js_group)
 
+# make an igraph from the graph JSON
 igf <- graph.data.frame(
   group_json$links + 1
   ,vertices =  data.frame(id = 1:nrow(group_json$nodes),group_json$nodes)
 )
 
+# use WebCola in V8 to layout the graph
 igf_layout <- ctx$get('
   graph.nodes.map(function(d){
     return [d.x,-d.y]
   })                    
 ')
 
+# plot the small group as much like the example as possible
+# start with an empty plot
 plot.new()
+# set our x and y scale limits
 plot.window(xlim=c(-3,3),ylim=c(-1,1))
+
 
 ctx$get('graph.groups.map(function(d){return d.bounds})') %>>%
   (
