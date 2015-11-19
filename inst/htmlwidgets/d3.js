@@ -1,19 +1,17 @@
 HTMLWidgets.widget({
 
-  name: 'cola',
+  name: 'd3',
 
   type: 'output',
 
   initialize: function(el, width, height) {
 
-    return {};
+    return {}
 
   },
 
   renderValue: function(el, x, instance) {
 
-    // does nothing right now
-    //  except adds the dependencies for WebCola
 
   },
 

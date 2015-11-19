@@ -1,18 +1,18 @@
-#' Add WebCola
+#' Add d3
 #'
-#' Easily add WebCola JavaScript dependencies in your HTML.
+#' Easily add d3 JavaScript dependencies in your HTML.
 #'
 #' @import htmlwidgets
 #'
 #' @export
-cola <- function(width = 0, height = 0) {
-
+d3 <- function(width = 0, height = 0) {
+  
   # forward options using x
   x <- list()
-
+  
   # create widget
   htmlwidgets::createWidget(
-    name = 'cola',
+    name = 'd3',
     x,
     width = width,
     height = height,

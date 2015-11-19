@@ -4,10 +4,9 @@
 \alias{cola}
 \title{Add WebCola}
 \usage{
-cola(message, width = 0, height = 0)
+cola(width = 0, height = 0)
 }
 \description{
-Easily add WebCola JavaScript to your HTML or
- use with \link{V8}.
+Easily add WebCola JavaScript dependencies in your HTML.
 }
 
