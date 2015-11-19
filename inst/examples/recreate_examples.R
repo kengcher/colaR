@@ -1,4 +1,4 @@
-# see if we can use WebCola in R with V8
+# demo how we can use WebCola in R with V8
 
 library(V8)
 library(jsonlite)
