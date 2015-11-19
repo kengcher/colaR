@@ -1,0 +1,28 @@
+Package: colaR
+Title: WebCola in R for dependencies and maybe as htmlwidget
+Version: 0.0.1
+Date: 2015-11-19
+Authors@R: c(
+      person(
+        "Tim", "Dwyer"
+        , role = c("aut", "cph")
+        , comment = "WebCola JavaScript library, https://github.com/tgdwyer/WebCola"
+      ),
+      person(
+        "Kent", "Russell"
+        , role = c("aut", "cre")
+        , comment = "R interface"
+        , email = "kent.russell@timelyportfolio.com"
+      )
+    )
+Maintainer: Kenton Russell <kent.russell@timelyportfolio.com>
+Description: WebCola JavaScript constraint-based layouts in R
+License: MIT + file LICENSE
+LazyData: true
+URL: https://github.com/timelyportfolio/colaR
+BugReports: https://github.com/timelyportfolio/colaR/issues
+Imports:
+    htmlwidgets
+Suggests:
+    testthat
+RoxygenNote: 4.1.1.9001
